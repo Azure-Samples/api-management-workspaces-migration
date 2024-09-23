@@ -1,6 +1,6 @@
-# Project Name
+# Project - Migration of Multiple Siloed APIM Instances to a Federated Workspace-Based APIM  
 
-A feature request has been made to support the migration of multiple siloed API Management (APIM) instances into a single, workspace-based federated APIM instance. This capability would streamline operations, enhance management efficiency, and reduce complexity for users managing dispersed APIM environments.
+The goal of this project is to support the migration of multiple siloed API Management (APIM) instances into a single, workspace-based federated APIM instance. This capability aims to streamline operations, enhance management efficiency, and reduce complexity for users managing dispersed APIM environments.
 
 ![image](./images/project-detail.png)
 
@@ -26,7 +26,8 @@ Install Azure CLI
 
 ### Installation
 
-1. **Clone the Repository**:
+#### Clone the Repository
+
 Clone this repository to your local machine:
 
 ```
@@ -34,9 +35,11 @@ git clone <repository_url>
 cd <repository_directory>  
 ```
 
-1. **This project depends on existing [APIOps](https://azure.github.io/apiops/apiops/0-labPrerequisites/apim-prereq-0-1.html) tool**. Please check the configuration steps for APIOps.
+#### This project depends on existing [APIOps](https://azure.github.io/apiops/apiops/0-labPrerequisites/apim-prereq-0-1.html) tool
 
-1. **Get Access Token for Azure APIM Management APIs**
+ Please check the configuration steps for APIOps.
+
+#### Get Access Token for Azure APIM Management APIs
 
 Run the following command to get an access token:
 
@@ -44,7 +47,7 @@ Run the following command to get an access token:
 ACCESS_TOKEN=$(az account get-access-token --resource=https://management.azure.com --query accessToken --output tsv)  
 echo "Access Token: $ACCESS_TOKEN"  
 ```
-Replace the access token before executing each script. 
+Replace the access token before executing each script.
 
 ### Steps
 
@@ -118,3 +121,15 @@ This section outlines the mapping of entities from siloed APIM instances to a wo
 | Developer Portal - Identities      |                      | Out of scope - at the moment | Out of scope - at the moment                     |
 | Developer Portal - Delegation      |                      | Out of scope - at the moment | Out of scope - at the moment                     |
 | Developer Portal - oAuh            |                      | Out of scope - at the moment | Out of scope - at the moment                     |
+
+## Contributing
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+
+## Trademark
+
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow Microsoft's Trademark & Brand Guidelines. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
