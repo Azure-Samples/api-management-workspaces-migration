@@ -59,6 +59,7 @@ Replace the access token before executing each script.
 
 
 ## Entity mapping list
+This section outlines the mapping of entities from siloed APIM instances to a workspace-based APIM setup, detailing the migration methods used.
 
 ### Migration through APIOps
  
