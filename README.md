@@ -4,87 +4,15 @@ The goal of this project is to support the migration of multiple siloed API Mana
 
 ![image](./images/project-detail.png)
 
-## Features
+## Workspace Overview 
 
-Here are some potential features for a project focused on migrating siloed API Management (APIM) instances to a workspace-based federated single APIM instance:
+Workspaces in Azure API Management introduce a new level of autonomy for an organization's API teams, allowing them to create, manage, and publish APIs more efficiently and securely. These workspaces provide isolated administrative access and API runtime, empowering API teams while enabling the central API platform team to maintain oversight through centralized monitoring, API policy enforcement, compliance, and unified API discovery via a developer portal. Functioning like "folders," each workspace contains APIs, products, subscriptions, named values, and related resources, with access managed through Azure's role-based access control (RBAC). Additionally, each workspace is linked to a workspace gateway that routes API traffic to backend services. 
 
-1. Automated Migration Tool: A tool that automates the migration process, ensuring a smooth transition from multiple siloed APIM instances to a unified workspace-based instance.
-1. Instance Consolidation: Ability to merge multiple APIM instances into a single, cohesive workspace.
-1. Guidance Documentation: Comprehensive documentation and best practices and limitation to assist users throughout the migration process.
-1. User Access Management: Centralized management of user roles and permissions within the new workspace-based APIM instance.
+## Benefits to migrate to federated APIM 
 
-## Getting Started
+Discover the benefits of federated workspaces in Azure API Management and how they enhance autonomy and efficiency for your API teams by reading more on the Microsoft Tech Community blog [Announcing General Availability of Workspaces in Azure API Management - Microsoft Community Hub](https://techcommunity.microsoft.com/t5/azure-integration-services-blog/announcing-general-availability-of-workspaces-in-azure-api/ba-p/4210796)
 
-This section provides a concise overview for getting started with the project, ensuring users have the necessary tools and permissions, and guiding them through the initial setup and configuration steps.
-
-### Prerequisites
-
-Install Azure PowerShell
-Azure Subscription Access - Ensure you have an active Azure account with sufficient permissions to manage APIM instances.
-Install Azure CLI
-
-
-### Installation
-
-#### Clone the Repository
-
-Clone this repository to your local machine:
-
-```
-git clone <repository_url>  
-cd <repository_directory>  
-```
-
-#### This project depends on existing [APIOps](https://azure.github.io/apiops/apiops/0-labPrerequisites/apim-prereq-0-1.html) tool
-
- Please check the configuration steps for APIOps.
-
-#### Get Access Token for Azure APIM Management APIs
-
-Run the following command to get an access token:
-
-```azurecli
-ACCESS_TOKEN=$(az account get-access-token --resource=https://management.azure.com --query accessToken --output tsv)  
-echo "Access Token: $ACCESS_TOKEN"  
-```
-Replace the access token before executing each script.
-
-### Steps
-
-1. Run APIOps to [Extract Artifacts](https://azure.github.io/apiops/apiops/4-extractApimArtifacts/):
-    Use APIOps to extract artifacts from each siloed APIM instance.
-
-1. Merge Artifacts into a Single Folder with Multiple Workspaces
-   Execute the [script](create-workspace.ps1) to merge the extracted artifacts into a single folder with multiple workspaces
-
-1. Run APIOps to [Publish Artifacts](https://azure.github.io/apiops/apiops/5-publishApimArtifacts/)
-   Use APIOps to publish the merged artifacts to the federated APIM instance
-
-
-## Entity mapping list
-This section outlines the mapping of entities from siloed APIM instances to a workspace-based APIM setup, detailing the migration methods used.
-
-### Migration through APIOps
- 
-| Siloed APIM              | Workspace-based APIM | Workspace Level          | Migration method (manual / APIOps / FTA scripts) |
-| ------------------------ | -------------------- | ------------------------ | ------------------------------------------------ |
-| APIs - APIs              | Yes                  | Workspace - APIs         | APIOps                                           |
-| APIs - Products          |                      | APIs - Products          | APIOps                                           |
-| APIs - Named values      |                      | APIs - Named values      | APIOps                                           |
-| APIs - Backends          |                      | APIs - Backends          | APIOps                                           |
-| APIs - Policy fragemnts  |                      | APIs - Policy fragemnts  | APIOps                                           |
-| APIs- API Tags           |                      | APIs- API Tags           | APIOps                                           |
-| APIs - Policy (all APIs) |                      | APIs - Policy (all APIs) | APIOps                                           |
-| Custom Loggers           |                      | Supported                | APIOps                                           |
-
-
-### Use Scripts
-
-| Siloed APIM                     | Workspace-based APIM | Workspace Level                | Migration method (manual / APIOps / FTA scripts) |
-| ------------------------------- | -------------------- | ------------------------------ | ------------------------------------------------ |
-| Developer Portal - Users        | Yes                  | Developer Portal - Users       | [Powershell Script](create-users.ps1)                             |
-| Developer Portal - User Groups  |                      | Developer Portal - User Groups | [Powershell Script](create-groups-and-groupusers.ps1)                             |
-| APIs - Subscriptions(with Keys) |                      | APIs - Subscriptions           | [Powershell Script](create-subscriptions.ps1)                             |
+## Current Limitation  
 
 ### Limitation - Not supported at workspace level at the moment
 
@@ -97,7 +25,6 @@ This section outlines the mapping of entities from siloed APIM instances to a wo
 | Managed identities -User assigned                  |                      | Not Supported at workspace at the moment |
 | Managed identities - System Assigned               |                      | Not Supported at workspace at the moment |
 | Protocols+Ciphers                                  |                      | Not Supported at workspace at the moment |
-
 
 ### Limitation - Guidance to configure for the federated APIM
 
@@ -121,6 +48,120 @@ This section outlines the mapping of entities from siloed APIM instances to a wo
 | Developer Portal - Identities      |                      | Out of scope - at the moment | Out of scope - at the moment                     |
 | Developer Portal - Delegation      |                      | Out of scope - at the moment | Out of scope - at the moment                     |
 | Developer Portal - oAuh            |                      | Out of scope - at the moment | Out of scope - at the moment                     |
+
+
+## Features of this project 
+
+Here are some potential features for a project focused on migrating siloed API Management (APIM) instances to a workspace-based federated single APIM instance:
+
+1. Automated Migration Tool: A tool that automates the migration process, ensuring a smooth transition from multiple siloed APIM instances to a unified workspace-based instance.
+1. Instance Consolidation: Ability to merge multiple APIM instances into a single, cohesive workspace.
+1. Guidance Documentation: Comprehensive documentation and best practices and limitation to assist users throughout the migration process.
+1. User Access Management: Centralized management of user roles and permissions within the new workspace-based APIM instance.
+
+## Getting Started
+
+This section provides a concise overview for getting started with the project, ensuring users have the necessary tools and permissions, and guiding them through the initial setup and configuration steps.
+
+### Prerequisites
+
+1. Install Azure PowerShell
+1. Azure Subscription Access - Ensure you have an active Azure account with contributor access to manage APIM instances.
+1. Install Azure CLI
+
+
+### Installation
+
+1. Open WSL
+
+2. Create a folder for the migration activity.
+
+```azurecli
+mkdir apim-silo-to-federated
+cd apim-silo-to-federated 
+```
+
+3. Clone the tools repository
+
+```azurecli
+git clone  https://github.com/Azure-Samples/api-management-workspaces-migration
+```
+
+4. Create a repository `federated-apim-apiops` to enable APIOPs for the migration to federated apim instance from siloed apim instance
+
+5. Setup APIOps for the migration thorugh APIOps
+
+ Configure APIM tools for [Azure DevOps](https://azure.github.io/apiops/apiops/3-apimTools/apimtools-azdo-2-3-new.html) or [GitHub](https://azure.github.io/apiops/apiops/3-apimTools/apimtools-github-2-4-new.html). Use the APIOps release[v6.0.2-alpha.1.0.3 or higher ](https://github.com/Azure/apiops/releases)
+
+6. Setup Extractor pipeline for the each siloed instance using Azure DevOps or GitHub
+
+7. Clone the `federated-apim-apiops` repository under the root folder `apim-silo-to-federated`
+
+```azurecli
+git clone <repository_url>   
+```
+
+8. Configure the name of the workspace in `create-workspace.ps1 ` and directory paths . Run the shell scripts to merge siloed artifacts with a workspace folder structure -  
+
+```azurepowershell
+PS> .\create-workspace.ps1 
+```
+
+9. Push the `artifacts-workspace` workspace folder to  `federated-apim-apiops` repository
+
+10. App Gateway guidance for custom domain setup.
+
+   Complete other manual configurations guidance
+
+11. Repeat steps from 8 to 10 for each siloed instance. This can be done later as well
+
+12. Setup the APIOps publisher pipeline from `federated-apim-apiops` repository targets to `atrifacts-workspace` folder.
+
+13. Get the access token
+
+ 
+```azurecli
+ACCESS_TOKEN=$(az account get-access-token --resource=https://management.azure.com --query accessToken --output tsv)   
+echo "Access Token: $ACCESS_TOKEN"   
+```
+ 
+14. Run the shell scripts to migrate the entities through scripts. Replace the access token before executing each script.
+
+```azurepowershell
+PS> .\create-users.ps1
+PS> .\create-groups-and-groupusers.ps1
+PS> .\create-subscriptions.ps1 
+```
+ 
+15. Run step #14 for each siloed instances. 
+
+
+
+ 
+### Entities Migration through APIOps
+ 
+| Siloed APIM              | Workspace-based APIM | Workspace Level          | Migration method (manual / APIOps / FTA scripts) |
+| ------------------------ | -------------------- | ------------------------ | ------------------------------------------------ |
+| APIs - APIs              | Yes                  | Workspace - APIs         | APIOps                                           |
+| APIs - Products          |                      | APIs - Products          | APIOps                                           |
+| APIs - Named values      |                      | APIs - Named values      | APIOps                                           |
+| APIs - Backends          |                      | APIs - Backends          | APIOps                                           |
+| APIs - Policy fragemnts  |                      | APIs - Policy fragemnts  | APIOps                                           |
+| APIs- API Tags           |                      | APIs- API Tags           | APIOps                                           |
+| APIs - Policy (all APIs) |                      | APIs - Policy (all APIs) | APIOps                                           |
+| Custom Loggers           |                      | Supported                | APIOps                                           |
+
+
+### Entities Migration through Scripts
+
+| Siloed APIM                     | Workspace-based APIM | Workspace Level                | Migration method (manual / APIOps / FTA scripts) |
+| ------------------------------- | -------------------- | ------------------------------ | ------------------------------------------------ |
+| Developer Portal - Users        | Yes                  | Developer Portal - Users       | [Powershell Script](create-users.ps1)                             |
+| Developer Portal - User Groups  |                      | Developer Portal - User Groups | [Powershell Script](create-groups-and-groupusers.ps1)                             |
+| APIs - Subscriptions(with Keys) |                      | APIs - Subscriptions           | [Powershell Script](create-subscriptions.ps1)                             |
+
+
+
 
 ## Contributing
 
