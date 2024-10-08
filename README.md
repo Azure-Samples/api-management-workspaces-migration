@@ -174,7 +174,7 @@ $federatedAPIMapiVersion = "2023-09-01-preview"
 ```
   
 
-#### Get the access token  
+#### Replace the access token  
 
 ```azurepowershell
 $siloAPIMaccessToken = "" # Replace with your actual token
