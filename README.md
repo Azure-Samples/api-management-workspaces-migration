@@ -184,8 +184,8 @@ $federatedAPIMaccessToken = ""  # Replace with your actual token
 ```azurepowershell
 PS> cd  .\apim-federrated-to-siloed 
 PS> .\api-management-workspaces-migration\create-users.ps1 
-PS> \api-management-workspaces-migration\create-groups-and-groupusers.ps1 
-PS> \api-management-workspaces-migration\create-subscriptions.ps1
+PS> .\api-management-workspaces-migration\create-groups-and-groupusers.ps1 
+PS> .\api-management-workspaces-migration\create-subscriptions.ps1
 ```
 
 17. Run step #15 and #16 for each siloed instances. 
