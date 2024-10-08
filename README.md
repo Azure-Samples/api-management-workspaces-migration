@@ -123,7 +123,7 @@ $newWorkspace2 = "<name of the workspace2>"
 10. Run the shell scripts to merge siloed artifacts with a workspace folder structure -   -  
 
 ```azurepowershell
-PS> .\create-workspace.ps1 
+PS> .\api-management-workspaces-migration \create-workspace.ps1  
 ```
 
 11. Go to the  <<federated-apim-apiops>>  folder
