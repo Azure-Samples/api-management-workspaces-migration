@@ -144,7 +144,9 @@ git push << federated-apim-apiops >>
 
  
 ```azurecli
-ACCESS_TOKEN=$(az account get-access-token --resource=https://management.azure.com --query accessToken --output tsv)   
+az login
+az account set –subscription <subscriptionId> 
+$ACCESS_TOKEN=(az account get-access-token --resource=https://management.azure.com --query accessToken --output tsv)   
 echo "Access Token: $ACCESS_TOKEN"   
 ```
  
