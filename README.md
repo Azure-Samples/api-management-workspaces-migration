@@ -65,9 +65,10 @@ This section provides a concise overview for getting started with the project, e
 
 ### Prerequisites
 
-1. Install Azure PowerShell
+1. [Install Azure PowerShell](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-12.3.0#install)
+1. [Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install#install-wsl-command)
+1. [Install Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli#install)
 1. Azure Subscription Access - Ensure you have an active Azure account with contributor access to manage APIM instances.
-1. Install Azure CLI
 
 
 ### Installation
@@ -87,7 +88,9 @@ cd apim-silo-to-federated
 git clone  https://github.com/Azure-Samples/api-management-workspaces-migration
 ```
 
-4. Create a repository `federated-apim-apiops` to enable APIOPs for the migration to federated apim instance from siloed apim instance
+#### Setup APIOps for the federated instance
+
+4. Following the gudiance in APIOPS doc,,create a repository `federated-apim-apiops` to enable APIOPs for the migration to federated apim instance from siloed apim instance
 
 5. Setup APIOps for the migration thorugh APIOps
 
@@ -95,29 +98,49 @@ git clone  https://github.com/Azure-Samples/api-management-workspaces-migration
 
 6. Setup Extractor pipeline for the each siloed instance using Azure DevOps or GitHub
 
-7. Clone the `federated-apim-apiops` repository under the root folder `apim-silo-to-federated`
+
+7. Run the extractor pipeline for each Siloed instances (for multiple siloed instances, run the extractor pipeline multiple times to get the artifacts in different folders.
+   Mention the folder name where you want to extract the artifacts in the pipeline e.g. silo001 , silo002 etc. 
+
+8. Clone the `federated-apim-apiops` repository under the root folder `apim-silo-to-federated`
 
 ```azurecli
 git clone <repository_url>   
 ```
 
-8. Configure the name of the workspace in `create-workspace.ps1 ` and directory paths . Run the shell scripts to merge siloed artifacts with a workspace folder structure -  
+9. Change the variables in .\ api-management-workspaces-migration\create-workspace.ps1 script 
+
+#### Define source and destination directories and workspace names   
+
+```azurepowershell
+$srcDir1 = ".\federated-apim-apiops\silo001"
+$srcDir2 = ".\federated-apim-apiops\silo002"
+$destDir = ".\federated-apim-apiops\artifacts-workspace"
+$newWorkspace1 = "<name of the workspace1>"
+$newWorkspace2 = "<name of the workspace2>"
+```
+
+10. Run the shell scripts to merge siloed artifacts with a workspace folder structure -   -  
 
 ```azurepowershell
 PS> .\create-workspace.ps1 
 ```
 
-9. Push the `artifacts-workspace` workspace folder to  `federated-apim-apiops` repository
+11. Go to the  <<federated-apim-apiops>>  folder
 
-10. App Gateway guidance for custom domain setup.
+```azurecli
+cd federated-apim-apiops 
+```
 
-   Complete other manual configurations guidance
+12. Push the `artifacts-workspace` workspace folder to  `federated-apim-apiops` repository
 
-11. Repeat steps from 8 to 10 for each siloed instance. This can be done later as well
+```azurecli
+git push << federated-apim-apiops >>
+```
 
-12. Setup the APIOps publisher pipeline from `federated-apim-apiops` repository targets to `atrifacts-workspace` folder.
+13. Setup the APIOps publisher pipeline from `federated-apim-apiops` repository targets to `atrifacts-workspace` folder.
 
-13. Get the access token
+14. Get the access token
 
  
 ```azurecli
@@ -125,15 +148,49 @@ ACCESS_TOKEN=$(az account get-access-token --resource=https://management.azure.c
 echo "Access Token: $ACCESS_TOKEN"   
 ```
  
-14. Run the shell scripts to migrate the entities through scripts. Replace the access token before executing each script.
+
+ 
+15. Change the variables in the scripts in 'api-management-workspaces-migration' folder -  
+
+#### Define your subscriptionId, resourceGroupName, and serviceName  for your siloed APIM instance 
 
 ```azurepowershell
-PS> .\create-users.ps1
-PS> .\create-groups-and-groupusers.ps1
-PS> .\create-subscriptions.ps1 
+$siloAPIMsubscriptionId = ""  # Replace with your actual subscriptionId
+$siloAPIMresourceGroupName = ""  # Replace with your actual resourceGroupName 
+$siloAPIMserviceName = "" # Replace with your actual serviceName
+$siloAPIMapiVersion = "2023-09-01-preview"  
 ```
+  
+
+#### Define your subscriptionId, resourceGroupName, and serviceName  for your federated APIM instance 
+
+```azurepowershell
+$federatedAPIMsubscriptionId = ""  # Replace with your actual subscriptionId
+$federatedAPIMresourceGroupName = ""  # Replace with your actual resourceGroupName
+$federatedAPIMserviceName = "" # Replace with your actual serviceName
+$federatedAPIMapiVersion = "2023-09-01-preview"  
+```
+  
+
+#### Get the access token  
+
+```azurepowershell
+$siloAPIMaccessToken = "" # Replace with your actual token
+$federatedAPIMaccessToken = ""  # Replace with your actual token
+```
+
+16. Run the shell scripts to migrate the entities through scripts.
  
-15. Run step #14 for each siloed instances. 
+```azurepowershell
+PS> cd  .\apim-federrated-to-siloed 
+PS> .\api-management-workspaces-migration\create-users.ps1 
+PS> \api-management-workspaces-migration\create-groups-and-groupusers.ps1 
+PS> \api-management-workspaces-migration\create-subscriptions.ps1
+```
+
+17. Run step #15 and #16 for each siloed instances. 
+
+18. Complete the manual configuration on federated instances outlined above table. 
 
 
 
