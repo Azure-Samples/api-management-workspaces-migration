@@ -1,7 +1,7 @@
 # Define source and destination directories and workspace names  
-$srcDir1 = "<replace the path>\silo001"  
-$srcDir2 = "<replace the path>\silo002"  
-$destDir = "<replace the path>\artifacts-workspace"  
+$srcDir1 = ".\federated-apim-apiops\silo001"  
+$srcDir2 = ".\federated-apim-apiops\silo002"  
+$destDir = ".\federated-apim-apiops\artifacts-workspace"  
 $newWorkspace1 = "<name of the workspace1>"
 $newWorkspace2 = "<name of the workspace2>"
 
@@ -45,5 +45,5 @@ $destWOrkspace1 = Join-Path -Path $destDir -ChildPath $newWorkspace1
 $destWOrkspace2 = Join-Path -Path $destDir -ChildPath $newWorkspace2 
 
 # Call the function to copy files and update content to the new subfolder  
-Copy-And-UpdateFiles -srcDir $srcDir1 -destWOrkspace $destWOrkspace1 
-Copy-And-UpdateFiles -srcDir $srcDir2 -destWOrkspace $destWOrkspace2 
+Copy-And-UpdateFiles -srcDir (Resolve-Path $srcDir1).Path -destWorkspace $destWorkspace1
+Copy-And-UpdateFiles -srcDir (Resolve-Path $srcDir2).Path -destWorkspace $destWorkspace2
