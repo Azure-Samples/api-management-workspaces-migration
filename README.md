@@ -12,42 +12,6 @@ Workspaces in Azure API Management introduce a new level of autonomy for an orga
 
 Discover the benefits of federated workspaces in Azure API Management and how they enhance autonomy and efficiency for your API teams by reading more on the Microsoft Tech Community blog [Announcing General Availability of Workspaces in Azure API Management - Microsoft Community Hub](https://techcommunity.microsoft.com/t5/azure-integration-services-blog/announcing-general-availability-of-workspaces-in-azure-api/ba-p/4210796)
 
-## Current Limitation  
-
-### Limitation - Not supported at workspace level at the moment
-
-| Siloed APIM                                        | Workspace-based APIM | Workspace Level                          |
-| -------------------------------------------------- | -------------------- | ---------------------------------------- |
-| APIs- Credential manager/Authorization             | No                   | Not Supported at workspace at the moment |
-| Deployment & Infrastructure - Locations            |                      | Not Supported at workspace at the moment |
-| Deployment & Infrastructure -Scale Out             |                      | Not Supported at workspace at the moment |
-| Deployment & Infrastructure - self hosted gateways |                      | Not Supported at workspace at the moment |
-| Managed identities -User assigned                  |                      | Not Supported at workspace at the moment |
-| Managed identities - System Assigned               |                      | Not Supported at workspace at the moment |
-| Protocols+Ciphers                                  |                      | Not Supported at workspace at the moment |
-
-### Limitation - Guidance to configure for the federated APIM
-
-| Siloed APIM                            | Workspace-based APIM | Workspace Level                           | Migration method (manual / APIOps / FTA scripts)                                |
-| -------------------------------------- | -------------------- | ----------------------------------------- | ------------------------------------------------------------------------------- |
-| APIs - Schemas                         | Yes                  | APIs - Schemas                            | Manual configuration                                                            |
-| Certificate - cert for frontend mtls   |                      | workspace - supported                     | Manual upload(except Azure Key Vault)                                           |
-| D&I  - Custom domains                  |                      | Not supported at workspace at the momenet | Configure AppGatewy/AzureFont Door for the custom domain                        |
-| D&I- notifications first 2             |                      | workspace - supported                     | Manually configure the emails, Add in the workspace level in the azure portal   |
-| D&I  - Notifications - rest            |                      | Not supported at workspace                | By design                                                                       |
-| Application Insights  -API             |                      | workspace - supported                     | Manual configuration                                                            |
-| Application Insights - Instance        |                      |                                           | Manual configuration                                                            |
-| Deplpyment & infrastructure  - Network |                      | workspace - supported                     | Manual configuration.Cannot reuse the same vnet but same config can be applied. |
-
-### Out of scope items for this tool
-
-| Siloed APIM                        | Workspace-based APIM | Workspace Level              | Migration method (manual / APIOps / FTA scripts) |
-| ---------------------------------- | -------------------- | ---------------------------- | ------------------------------------------------ |
-| Developer Portal - Portal Overview | No                   | Out of scope - at the moment | Out of scope - at the moment                     |
-| Developer Portal - Portal Settings |                      | Out of scope - at the moment | Out of scope - at the moment                     |
-| Developer Portal - Identities      |                      | Out of scope - at the moment | Out of scope - at the moment                     |
-| Developer Portal - Delegation      |                      | Out of scope - at the moment | Out of scope - at the moment                     |
-| Developer Portal - oAuh            |                      | Out of scope - at the moment | Out of scope - at the moment                     |
 
 
 ## Features of this project 
@@ -190,9 +154,9 @@ PS> .\api-management-workspaces-migration\create-groups-and-groupusers.ps1
 PS> .\api-management-workspaces-migration\create-subscriptions.ps1
 ```
 
-17. Run step #15 and #16 for each siloed instances. 
+17. Run step #15 and #16 for each siloed instances.
 
-18. Complete the manual configuration on federated instances outlined above table. 
+18. Complete the manual configuration on federated instances outlined above table.
 
 
 
@@ -220,6 +184,25 @@ PS> .\api-management-workspaces-migration\create-subscriptions.ps1
 | APIs - Subscriptions(with Keys) |                      | APIs - Subscriptions           | [Powershell Script](create-subscriptions.ps1)                             |
 
 
+## Current Limitation  
+
+### Limitation - Not supported at workspace level at the moment
+
+Before migrating to Workspaces, please verify that all necessary features are supported. For detailed information, refer to the [documentation](https://aka.ms/apimdocs/workspaces). In the process of migrating to Workspaces, it's important to note that some elements may not be supported by the migration tool and will need to be configured manually. For instance, components such as developer portal content and identity providers fall into this category. These elements will reside outside of Workspaces in the destination service, requiring manual configuration to ensure proper functionality.
+
+### Limitation - Guidance to configure for the federated APIM
+
+| Siloed APIM                            | Migration method (manual / APIOps / FTA scripts)                                |
+| -------------------------------------- | ------------------------------------------------------------------------------- |
+| APIs - Schemas                         | Require manual configuration (not automatically supported by the tool)                                                           |
+| Certificate - cert for frontend mtls   | Require manual configuration (not automatically supported by the tool) Azure Key Vault is not supported for Certificate store.)                                           |
+| D&I  - Custom domains                  | Require manual configuration (not automatically supported by the tool). Configure AppGatewy/AzureFont Door for the custom domain                        |
+| D&I- notifications first 2             | Require manual configuration (not automatically supported by the tool)   |
+| Application Insights  -API             | Require manual configuration (not automatically supported by the tool)                                                               |
+| Application Insights - Instance        | Require manual configuration (not automatically supported by the tool)                                                               |
+| Deployment & infrastructure  - Network | Require manual configuration (not automatically supported by the tool) Cannot reuse the same vnet but same config can be applied. |
+| Developer Portal Content | Require manual configuration (not automatically supported by the tool) |
+| Developer Portal Identity | Require manual configuration (not automatically supported by the tool) |
 
 
 ## Contributing
