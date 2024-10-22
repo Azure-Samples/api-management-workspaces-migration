@@ -1,6 +1,6 @@
 # Project - Migration of Multiple Siloed APIM Instances to a Federated Workspace-Based APIM  
 
-The goal of this project is to support the migration of multiple siloed API Management (APIM) instances into a single, workspace-based federated APIM instance. This capability aims to streamline operations, enhance management efficiency, and reduce complexity for users managing dispersed APIM environments.
+The goal of this project is to support the migration of multiple siloed API Management (APIM) instances into a single, workspace-based federated APIM instance. This repository contains tools and guidance to execute the migration.This capability aims to streamline operations, enhance management efficiency, and reduce complexity for users managing dispersed APIM environments. There are few limitations listed at the bottom.
 
 ![image](./images/project-detail.png)
 
@@ -12,16 +12,6 @@ Workspaces in Azure API Management introduce a new level of autonomy for an orga
 
 Discover the benefits of federated workspaces in Azure API Management and how they enhance autonomy and efficiency for your API teams by reading more on the Microsoft Tech Community blog [Announcing General Availability of Workspaces in Azure API Management - Microsoft Community Hub](https://techcommunity.microsoft.com/t5/azure-integration-services-blog/announcing-general-availability-of-workspaces-in-azure-api/ba-p/4210796)
 
-
-
-## Features of this project 
-
-Here are some potential features for a project focused on migrating siloed API Management (APIM) instances to a workspace-based federated single APIM instance:
-
-1. Automated Migration Tool: A tool that automates the migration process, ensuring a smooth transition from multiple siloed APIM instances to a unified workspace-based instance.
-1. Instance Consolidation: Ability to merge multiple APIM instances into a single, cohesive workspace.
-1. Guidance Documentation: Comprehensive documentation and best practices and limitation to assist users throughout the migration process.
-1. User Access Management: Centralized management of user roles and permissions within the new workspace-based APIM instance.
 
 ## Getting Started
 
@@ -36,6 +26,9 @@ This section provides a concise overview for getting started with the project, e
 
 
 ### Installation
+
+The migration tool for transitioning from siloed API Management (APIM) instances to a federated APIM instance involves several steps.The setup includes configuring APIOps for the federated instance and setting up extractor pipelines for each siloed instance. Artifacts from each siloed instance are extracted and organized into a workspace folder structure, which is then pushed to the federated APIM repository.Then, users run scripts to migrate entities and complete any necessary manual configurations. It's important to note that there are limitations listed below for this migration.
+
 
 1. Open WSL
 
@@ -159,38 +152,40 @@ PS> .\api-management-workspaces-migration\create-subscriptions.ps1
 18. Complete the manual configuration on federated instances outlined above table.
 
 
-
  
 ### Entities Migration through APIOps
- 
-| Siloed APIM              | Workspace-based APIM | Workspace Level          | Migration method (manual / APIOps / FTA scripts) |
-| ------------------------ | -------------------- | ------------------------ | ------------------------------------------------ |
-| APIs - APIs              | Yes                  | Workspace - APIs         | APIOps                                           |
-| APIs - Products          |                      | APIs - Products          | APIOps                                           |
-| APIs - Named values      |                      | APIs - Named values      | APIOps                                           |
-| APIs - Backends          |                      | APIs - Backends          | APIOps                                           |
-| APIs - Policy fragemnts  |                      | APIs - Policy fragemnts  | APIOps                                           |
-| APIs- API Tags           |                      | APIs- API Tags           | APIOps                                           |
-| APIs - Policy (all APIs) |                      | APIs - Policy (all APIs) | APIOps                                           |
-| Custom Loggers           |                      | Supported                | APIOps                                           |
 
+Below are the entities migrate in workspace level from the siloed APIM through APIOps-
+
+* APIs
+* Products
+* Backend
+* Policy fragments
+* Tags
+* Policy
+* Custom Logger
 
 ### Entities Migration through Scripts
 
-| Siloed APIM                     | Workspace-based APIM | Workspace Level                | Migration method (manual / APIOps / FTA scripts) |
-| ------------------------------- | -------------------- | ------------------------------ | ------------------------------------------------ |
-| Developer Portal - Users        | Yes                  | Developer Portal - Users       | [Powershell Script](create-users.ps1)                             |
-| Developer Portal - User Groups  |                      | Developer Portal - User Groups | [Powershell Script](create-groups-and-groupusers.ps1)                             |
-| APIs - Subscriptions(with Keys) |                      | APIs - Subscriptions           | [Powershell Script](create-subscriptions.ps1)                             |
-
+* Execute the [Powershell Script](create-users.ps1) to migrate the Users from siloed APIM service to federated APIM service level. Please note that the script will not work if there is a conflict(same user in two different siloed APIM instances) .
+* Execute the [Powershell Script](create-groups-and-groupusers.ps1) to migrate the User Groups from siloed APIM service to federated workspace level.
+* Execute the [Powershell Script](create-subscriptions.ps1) to migrate the APIs - Subscriptions(with Keys) from siloed APIM service to federated workspace level.
 
 ## Current Limitation  
 
-### Limitation - Not supported at workspace level at the moment
+### Limitation - Not supported at workspace level
 
-Before migrating to Workspaces, please verify that all necessary features are supported. For detailed information, refer to the [documentation](https://aka.ms/apimdocs/workspaces). In the process of migrating to Workspaces, it's important to note that some elements may not be supported by the migration tool and will need to be configured manually. For instance, components such as developer portal content and identity providers fall into this category. These elements will reside outside of Workspaces in the destination service, requiring manual configuration to ensure proper functionality.
+#### Temporary workspace limitation
+
+Before migrating to Workspaces, please verify that all necessary features are supported. For detailed information, refer to the [documentation](https://aka.ms/apimdocs/workspaces).If customers need this functionality, they should not migrate.
+
+#### Limitation by design
+
+In the process of migrating to Workspaces, it's important to note that some elements may not be supported by the migration tool and will need to be configured manually.Components such as developer portal content and identity providers fall into this category. These elements will reside outside of Workspaces in the destination service, requiring manual configuration to ensure proper functionality.
 
 ### Limitation - Guidance to configure for the federated APIM
+
+Below items are currently unsupported by the tool and need to configured manually - 
 
 | Siloed APIM                            | Migration method (manual / APIOps / FTA scripts)                                |
 | -------------------------------------- | ------------------------------------------------------------------------------- |
