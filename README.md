@@ -6,7 +6,7 @@ The goal of this project is to support the migration of multiple siloed API Mana
 
 ## Workspace Overview 
 
-Workspaces in Azure API Management introduce a new level of autonomy for an organization's API teams, allowing them to create, manage, and publish APIs more efficiently and securely. These workspaces provide isolated administrative access and API runtime, empowering API teams while enabling the central API platform team to maintain oversight through centralized monitoring, API policy enforcement, compliance, and unified API discovery via a developer portal. Functioning like "folders," each workspace contains APIs, products, subscriptions, named values, and related resources, with access managed through Azure's role-based access control (RBAC). Additionally, each workspace is linked to a workspace gateway that routes API traffic to backend services. 
+Workspaces in Azure API Management introduce a new level of autonomy for an organization's API teams, allowing them to create, manage, and publish APIs more efficiently and securely. These workspaces provide isolated administrative access and API runtime, empowering API teams while enabling the central API platform team to maintain oversight through centralized monitoring, API policy enforcement, compliance, and unified API discovery via a developer portal. Functioning like "folders", each workspace contains APIs, products, subscriptions, named values, and related resources, with access managed through Azure's role-based access control (RBAC). Additionally, each workspace is linked to a workspace gateway that routes API traffic to backend services. 
 
 ## Benefits to migrate to federated APIM 
 
@@ -27,7 +27,15 @@ This section provides a concise overview for getting started with the project, e
 
 ### Installation
 
-The migration tool for transitioning from siloed API Management (APIM) instances to a federated APIM instance involves several steps.The setup includes configuring APIOps for the federated instance and setting up extractor pipelines for each siloed instance. Artifacts from each siloed instance are extracted and organized into a workspace folder structure, which is then pushed to the federated APIM repository.Then, users run scripts to migrate entities and complete any necessary manual configurations. It's important to note that there are limitations listed below for this migration.
+The migration tool for transitioning from siloed API Management (APIM) instances to a federated APIM instance involves several steps.
+-	Configure APIOps tool following its guidance, setting up extractor pipeline parameters for each sioled instance
+-	Use scripts provided (in this migration tool) to organize extracted artifacts (from APIOps) into a workspace folder structure locally
+-	Push the folder to the federated APIM repo (in APIOps); use publisher pipeline (in APIOps) to import it into the federated APIM instance
+-	Run other scripts (in this tool) to migrate remaining entities from siloed APIM to federated APIM instance
+-	Perform manual configurations in federated APIM (if needed)
+
+Note: Currently (2024.11) there are limitation of this migration tool listed below 
+
 
 
 1. Open WSL
