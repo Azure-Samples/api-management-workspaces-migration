@@ -8,17 +8,12 @@ The migration process for transitioning from siloed API Management instances to 
 -	Use scripts provided (in this migration tool) to organize extracted artifacts (from APIOps) into a workspace folder structure locally
 -	Push the folder to the federated API Management repo (in APIOps); use publisher pipeline (in APIOps) to import it into the federated API Management instance
 -	Run other scripts (in this migration tool) to migrate remaining entities from siloed API Management to federated instance
--	Perform manual configurations in federated API Management instance (if needed)
+-	If needed, perform manual configurations in federated API Management instance
 
 See [Migrated entities](#migrated-entities) for details on entities that can be migrated and limitations.
 
 ![image](./images/project-detail.png)
 
-<!-- 
-## Workspaces overview 
-
-Workspaces in Azure API Management introduce a new level of autonomy for an organization's API teams, allowing them to create, manage, and publish APIs more efficiently and securely. These workspaces provide isolated administrative access and API runtime, empowering API teams while enabling the central API platform team to maintain oversight through centralized monitoring, API policy enforcement, compliance, and unified API discovery via a developer portal. Functioning like "folders," each workspace contains APIs, products, subscriptions, named values, and related resources, with access managed through Azure's role-based access control (RBAC). Additionally, each workspace is linked to a workspace gateway that routes API traffic to backend services. 
--->
 
 Learn more about workspaces:
 
@@ -170,12 +165,15 @@ Entity | Tool |
 | Groups | PowerShell script |
 | Subscriptions | PowerShell script | 
 
+> [!NOTE] 
+> The PowerShell script to migrate users will fail if a user is configured in more than one siloed instance. In such cases, deduplicate the users manually before running the script.  
+
 ### Limitations
 
 Certain resources and configurations currently aren't supported in API Management workspaces or aren't migrated by the migration tools and may require manual configuration. These include:
 
 * APIs - schemas                                                                                    
-* Certificates for frontend mTLS stored in Azure Key Vault                                           |
+* Certificates for frontend mTLS stored in Azure Key Vault                                      
 * Custom domains - optionally configure Application Gateway or Azure FrontDoor for the custom domain                        
 * Notifications and notification templates             
 * Application Insights
@@ -185,7 +183,7 @@ Certain resources and configurations currently aren't supported in API Managemen
 
 ## Support
 
-To report issues or suggest features, please open an issue in this repository.
+To report issues or suggest features, please open an issue in this repository. This project is not supported through Microsoft Support.
 
 ## Contributing
 
