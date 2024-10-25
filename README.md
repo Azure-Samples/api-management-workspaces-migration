@@ -1,9 +1,16 @@
-# Migrate Multiple Siloed API Management Instances to a Federated Workspace-Based Instance  
+# Project - Migrate Multiple Siloed API Management Instances to a Federated Workspace-Based Instance  
 
 This repo contains tools and guidance to migrate entities such as APIs and products from multiple siloed Azure API Management instances into a single, workspace-based federated API Management instance.  
 
-Entities are migrated using the [Azure APIOps Toolkit](https://github.com/Azure/APIOps) and custom PowerShell scripts. The APIOps migration process involves extracting resources from each siloed instance, organizing them into a workspace folder structure, and publishing them to the federated instance. PowerShell scripts are available to migrate some entities not handled by APIOps. After migration, complete any necessary manual configurations. See [Migrated entities](#migrated-entities) for details on entities that can be migrated and limitations.
+The migration process for transitioning from siloed API Management instances to a federated instance involves several steps.
 
+-	Configure [Azure APIOps Toolkit](https://github.com/Azure/APIOps) following its guidance, setting up extractor pipeline parameters for each siloed instance
+-	Use scripts provided (in this migration tool) to organize extracted artifacts (from APIOps) into a workspace folder structure locally
+-	Push the folder to the federated API Management repo (in APIOps); use publisher pipeline (in APIOps) to import it into the federated API Management instance
+-	Run other scripts (in this migration tool) to migrate remaining entities from siloed API Management to federated instance
+-	Perform manual configurations in federated API Management instance (if needed)
+
+See [Migrated entities](#migrated-entities) for details on entities that can be migrated and limitations.
 
 ![image](./images/project-detail.png)
 
@@ -92,6 +99,7 @@ See the APIOps documentation for detailed guidance on setting up and running API
 1. Run the APIOps *publisher pipeline* from the `federated-apim-apiops` repository to the federated API Management instance, using the contents of the `artifacts-workspace` folder.
 
 ## Migrate other entities
+
 
 This repository contains separate PowerShell scripts to migrate users, groups, and subscriptions from a siloed API Management instance to a federated API Management instance. These entities aren't migrated through APIOps. Other entities, such as developer portal content and identity providers, require manual configuration.
 
