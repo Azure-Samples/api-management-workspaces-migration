@@ -166,6 +166,7 @@ Entity | Tool |
 
 > [!NOTE] 
 > Users are migrated at the service level, not to individual workspaces. Users in the federated instance are shared across workspaces.
+>
 > The PowerShell script to migrate users will fail if a user is configured in more than one siloed instance. In such cases, deduplicate the users manually before running the script.  
 
 ## Limitations
