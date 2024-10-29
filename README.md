@@ -1,4 +1,4 @@
-# Project - Guidance and tooling for migration to workspaces in Azure API Management
+# Guidance and tooling for migration to workspaces in Azure API Management
 
 This repo contains tools and guidance to migrate entities such as APIs and products from multiple Azure API Management instances into a single, workspace-based API Management instance. The source instances are referred to as "siloed" instances, meaning they are administered and used by separate teams. The destination instance is referred to as a "federated" instance, because the teams' resources are organized into segregated workspaces in a centrally administered service.   
     
