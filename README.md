@@ -170,7 +170,7 @@ Entity | Tool |
 
 ## Limitations
 
-Certain resources and configurations currently [are not supported in API Management workspaces](https://learn.microsoft.com/en-us/azure/api-management/workspaces-overview#gateway-constraints) or aren't migrated by the migration tools and may require manual configuration. These include:
+Certain resources and configurations currently [are not supported in API Management workspaces](https://learn.microsoft.com/azure/api-management/workspaces-overview#gateway-constraints) or aren't migrated by the migration tools and may require manual configuration. These include:
 
 * APIs - schemas                                                                                    
 * Certificates for frontend mTLS stored in Azure Key Vault                                      
